@@ -1,7 +1,11 @@
-import Image from "next/image";
+"use client"
+import Map from "@/app/components/Map";
 
-export default function Home() {
-  return (
-     <>hi</>
-  );
+export default function  Home (){
+
+  return(
+    <> 
+<Map/>
+    </>
+  )
 }

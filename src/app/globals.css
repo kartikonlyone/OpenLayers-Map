@@ -31,3 +31,20 @@ body {
     text-wrap: balance;
   }
 }
+
+
+.custom_select_btns{
+  background-color: #fff;
+  color: #000;
+  margin: 10px;
+  padding: 7px;
+  border-radius: 7px;
+  font-weight: 600;
+}
+.custom_select_btns:hover{
+  background-color: cornflowerblue;
+  color: #fff;
+}
+.calculate_area p{
+  padding: 10px;
+}
