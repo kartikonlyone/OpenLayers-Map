@@ -87,8 +87,8 @@ const MapWithInteractions = () => {
 
     const calculateLength = (geometry) => {
         const length = getLength(geometry, { projection: map.getView().getProjection() });
-        const lengthInMeters = Math.round(length * 100) / 100; // Round to 2 decimal places
-        const lengthInKilometers = Math.round((length / 1000) * 100) / 100; // Convert to kilometers and round to 2 decimal places
+        const lengthInMeters = Math.round(length * 100) / 100;  
+        const lengthInKilometers = Math.round((length / 1000) * 100) / 100; / 
         return {
             meters: `${lengthInMeters} m`,
             kilometers: `${lengthInKilometers} km`
@@ -98,8 +98,8 @@ const MapWithInteractions = () => {
     const calculateArea = (geometry) => {
         if (geometry.getType() === 'Polygon') {
             const area = getArea(geometry, { projection: map.getView().getProjection() });
-            const areaInSquareMeters = Math.round(area * 100) / 100; // Round to 2 decimal places
-            const areaInSquareKilometers = Math.round((area / 1000000) * 100) / 100; // Convert to square kilometers and round to 2 decimal places
+            const areaInSquareMeters = Math.round(area * 100) / 100;  
+            const areaInSquareKilometers = Math.round((area / 1000000) * 100) / 100;  
             return {
                 squareMeters: `${areaInSquareMeters} m²`,
                 squareKilometers: `${areaInSquareKilometers} km²`
