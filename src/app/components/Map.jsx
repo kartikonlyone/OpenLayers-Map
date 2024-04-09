@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState, useEffect } from 'react';
 import 'ol/ol.css';
 import Map from 'ol/Map';
@@ -10,6 +10,7 @@ import { Vector as VectorSource } from 'ol/source';
 import { Draw } from 'ol/interaction';
 import { getLength, getArea } from 'ol/sphere';
 import { Style, Stroke, Fill } from 'ol/style';
+import { fromLonLat } from 'ol/proj'; // Import fromLonLat function
 
 const MapWithInteractions = () => {
     const [map, setMap] = useState(null);
@@ -27,8 +28,8 @@ const MapWithInteractions = () => {
                 })
             ],
             view: new View({
-                center: [0, 0],
-                zoom: 2
+                center: fromLonLat([77.2167, 28.6139]), // Centered around Delhi using fromLonLat
+                zoom: 10 // Zoom level adjusted according to your preference
             })
         });
 
@@ -88,7 +89,7 @@ const MapWithInteractions = () => {
     const calculateLength = (geometry) => {
         const length = getLength(geometry, { projection: map.getView().getProjection() });
         const lengthInMeters = Math.round(length * 100) / 100;  
-        const lengthInKilometers = Math.round((length / 1000) * 100) / 100; / 
+        const lengthInKilometers = Math.round((length / 1000) * 100) / 100; 
         return {
             meters: `${lengthInMeters} m`,
             kilometers: `${lengthInKilometers} km`
@@ -97,12 +98,12 @@ const MapWithInteractions = () => {
 
     const calculateArea = (geometry) => {
         if (geometry.getType() === 'Polygon') {
-            const area = getArea(geometry, { projection: map.getView().getProjection() });
+            const area = getArea(geometry, { projection: 'EPSG:3857' }); // Use the appropriate projection
             const areaInSquareMeters = Math.round(area * 100) / 100;  
-            const areaInSquareKilometers = Math.round((area / 1000000) * 100) / 100;  
+            const areaInSquareKilometers = Math.round((area / 1000000) * 100) / 100; // Convert square meters to square kilometers
             return {
                 squareMeters: `${areaInSquareMeters} m²`,
-                squareKilometers: `${areaInSquareKilometers} km²`
+                squareKilometers: `${areaInSquareKilometers} km²`, // Return area in square kilometers
             };
         } else {
             return null; // Return null for non-polygon geometries
@@ -111,14 +112,28 @@ const MapWithInteractions = () => {
 
     return (
         <>
-            <div id="map" style={{ width: '100%', height: '400px' }}></div>
+            <div id="map" style={{ marginBottom: '20px' }}></div>
             <div className='btns'>
                 <button className='custom_select_btns' onClick={() => handleDrawType('Polygon')}>Draw Polygon</button>
                 <button className='custom_select_btns' onClick={() => handleDrawType('LineString')}>Draw Line</button>
             </div>
             <div className='calculate_area'>
-                {area ? (<p>Area in meters<sup>2</sup>:  {area.squareMeters} <br/> Area in km<sup>2</sup>:  {area.squareKilometers}</p>):<p>No polygon made yet</p>}
-                {length ? (<p>Distance in meters:  {length.meters}<br/> Distance in km:  {length.kilometers}</p>) : <p>No lines Drawn yet</p> }
+                {area ? (
+                    <p>
+                        Area in meters<sup>2</sup>: <span>{area.squareMeters}</span> <br/>
+                        Area in km<sup>2</sup>: <span>{area.squareKilometers}</span>
+                    </p>
+                ) : (
+                    <p>No polygon made yet</p>
+                )}
+                {length ? (
+                    <p>
+                        Distance in meters: <span>{length.meters}</span><br/>
+                        Distance in km: <span>{length.kilometers}</span>
+                    </p>
+                ) : (
+                    <p>No lines drawn yet</p>
+                )}
             </div>
         </>
     );
