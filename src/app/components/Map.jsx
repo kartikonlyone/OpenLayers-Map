@@ -10,7 +10,7 @@ import { Vector as VectorSource } from 'ol/source';
 import { Draw } from 'ol/interaction';
 import { getLength, getArea } from 'ol/sphere';
 import { Style, Stroke, Fill } from 'ol/style';
-import { fromLonLat } from 'ol/proj'; // Import fromLonLat function
+import { fromLonLat } from 'ol/proj';  
 
 const MapWithInteractions = () => {
     const [map, setMap] = useState(null);
@@ -28,8 +28,8 @@ const MapWithInteractions = () => {
                 })
             ],
             view: new View({
-                center: fromLonLat([77.2167, 28.6139]), // Centered around Delhi using fromLonLat
-                zoom: 10 // Zoom level adjusted according to your preference
+                center: fromLonLat([77.2167, 28.6139]),  
+                zoom: 10 
             })
         });
 
@@ -98,15 +98,15 @@ const MapWithInteractions = () => {
 
     const calculateArea = (geometry) => {
         if (geometry.getType() === 'Polygon') {
-            const area = getArea(geometry, { projection: 'EPSG:3857' }); // Use the appropriate projection
+            const area = getArea(geometry, { projection: 'EPSG:3857' });  
             const areaInSquareMeters = Math.round(area * 100) / 100;  
-            const areaInSquareKilometers = Math.round((area / 1000000) * 100) / 100; // Convert square meters to square kilometers
+            const areaInSquareKilometers = Math.round((area / 1000000) * 100) / 100; 
             return {
                 squareMeters: `${areaInSquareMeters} m²`,
-                squareKilometers: `${areaInSquareKilometers} km²`, // Return area in square kilometers
+                squareKilometers: `${areaInSquareKilometers} km²`,  
             };
         } else {
-            return null; // Return null for non-polygon geometries
+            return null;  
         }
     };
 
